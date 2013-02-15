@@ -52,7 +52,6 @@ class BuildParser {
 		}
 		
 		overallDuration += calculateDuration(lastBuildTime, firstBuildTime)
-		
 		writeOutput()
 	
 		return brokenBuildCount
