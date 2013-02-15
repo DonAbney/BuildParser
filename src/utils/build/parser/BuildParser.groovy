@@ -58,7 +58,14 @@ class BuildParser {
 	}
 	
 	void writeOutput() {
+		
 		outputFile = new File((inputFile.parentFile.toString() + '/output.txt'))
+
+		if (outputFile.exists()) {
+			def backupFile = new File(outputFile.absolutePath + 'backup')
+			backupFile.append(outputFile.getText())
+			outputFile.write('')
+		}
 		
 		outputFile.append('Number of GOOD builds = ' + goodCount + '\r\n')
 		outputFile.append('Number of BROKEN builds = ' + brokenBuildCount + '\r\n')
