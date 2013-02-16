@@ -9,7 +9,7 @@ class TestBuildParser extends GroovyTestCase {
 	BuildParser parser
 	
 	public void setUp() {
-		File inputFile = new File('/Users/DonAbney/Dev/JohnDeere/ctBuild.xml')
+		File inputFile = new File("test/testFiles/rssAllCT.xml")
 		parser = new BuildParser(inputFile)
 	}
 	
