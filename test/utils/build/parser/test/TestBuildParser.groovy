@@ -15,8 +15,8 @@ class TestBuildParser extends GroovyTestCase {
 	
 	public void testParseFile() {
 		
-		Integer brokenCount = parser.parseFile()
-		assertTrue(brokenCount > 0)
+		Integer numberOfEntries = parser.parseFile()
+		assertTrue(numberOfEntries > 0)
 	}
 	
 	public void testCalculateDuration() {
