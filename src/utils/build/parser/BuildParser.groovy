@@ -61,28 +61,14 @@ class BuildParser {
 	void writeOutput() {
 		
 		outputFile = new File((inputFile.parentFile.toString() + '/output.html'))
+		def writer = new StringWriter()
+		def builder = new MarkupBuilder(writer)
 
 		if (outputFile.exists()) {
 			def backupFile = new File(outputFile.absolutePath + 'backup')
 			backupFile.append(outputFile.getText())
 			outputFile.write('')
 		}
-		
-//		outputFile.append('Number of GOOD builds = ' + goodCount + '\r\n')
-//		outputFile.append('Number of BROKEN builds = ' + brokenBuildCount + '\r\n')
-//		outputFile.append('Total duration in build file is ' + formatTime(overallDuration) + '\r\n')
-//		outputFile.append('Total build UP time is ' + formatTime(totalGoodBuildTime) + '\r\n')
-//		outputFile.append('Total build DOWN time is ' + formatTime(overallDuration - totalGoodBuildTime) + '\r\n')
-//		outputFile.append('\r\n')
-//		
-//		outputFile.append('The list of UP time durations (trying to show wobble) \r\n')
-//		
-//		upTimes.each {
-//			outputFile.append(formatTime(it) + '\r\n')
-//		}
-		
-		def writer = new StringWriter()
-		def builder = new MarkupBuilder(writer)
 		
 		builder.html {
 			head {
