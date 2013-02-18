@@ -2,6 +2,7 @@ package utils.build.parser
 
 import groovy.time.*
 import java.util.concurrent.TimeUnit
+import groovy.xml.MarkupBuilder
 
 class BuildParser {
 	
@@ -59,7 +60,7 @@ class BuildParser {
 	
 	void writeOutput() {
 		
-		outputFile = new File((inputFile.parentFile.toString() + '/output.txt'))
+		outputFile = new File((inputFile.parentFile.toString() + '/output.html'))
 
 		if (outputFile.exists()) {
 			def backupFile = new File(outputFile.absolutePath + 'backup')
@@ -67,18 +68,52 @@ class BuildParser {
 			outputFile.write('')
 		}
 		
-		outputFile.append('Number of GOOD builds = ' + goodCount + '\r\n')
-		outputFile.append('Number of BROKEN builds = ' + brokenBuildCount + '\r\n')
-		outputFile.append('Total duration in build file is ' + formatTime(overallDuration) + '\r\n')
-		outputFile.append('Total build UP time is ' + formatTime(totalGoodBuildTime) + '\r\n')
-		outputFile.append('Total build DOWN time is ' + formatTime(overallDuration - totalGoodBuildTime) + '\r\n')
-		outputFile.append('\r\n')
+//		outputFile.append('Number of GOOD builds = ' + goodCount + '\r\n')
+//		outputFile.append('Number of BROKEN builds = ' + brokenBuildCount + '\r\n')
+//		outputFile.append('Total duration in build file is ' + formatTime(overallDuration) + '\r\n')
+//		outputFile.append('Total build UP time is ' + formatTime(totalGoodBuildTime) + '\r\n')
+//		outputFile.append('Total build DOWN time is ' + formatTime(overallDuration - totalGoodBuildTime) + '\r\n')
+//		outputFile.append('\r\n')
+//		
+//		outputFile.append('The list of UP time durations (trying to show wobble) \r\n')
+//		
+//		upTimes.each {
+//			outputFile.append(formatTime(it) + '\r\n')
+//		}
 		
-		outputFile.append('The list of UP time durations (trying to show wobble) \r\n')
+		def writer = new StringWriter()
+		def builder = new MarkupBuilder(writer)
 		
-		upTimes.each {
-			outputFile.append(formatTime(it) + '\r\n')
+		builder.html {
+			head {
+				title("Jenkins Build Report"){}
+				style(type:"text/css", '''  
+			    body {  
+			        margin: 30px;  
+			        padding: 30px;  
+			        background-color: #cccccc  
+				}
+				ul {
+					list-style: none
+				}
+			    ''')
+			}
+			body {
+				p('Number of GOOD builds = ' + goodCount)
+				p('Number of BROKEN builds = ' + brokenBuildCount)
+				p('Total duration in build file is ' + formatTime(overallDuration))
+				p('Total build UP time is ' + formatTime(totalGoodBuildTime))
+				p('Total build DOWN time is ' + formatTime(overallDuration - totalGoodBuildTime))
+				p("The list of UP time durations")
+				ul {
+					upTimes.each {
+						li (formatTime(it))
+					}
+				}
+			}
 		}
+		
+		outputFile.append(writer.toString())
 		
 	}
 	
@@ -96,5 +131,5 @@ class BuildParser {
 			TimeUnit.MILLISECONDS.toMinutes(duration) -
 			TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(duration)))
 	}
-
+	
 }
