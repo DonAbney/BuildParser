@@ -86,17 +86,18 @@ class BuildParser {
 			}
 			body {
 				p('Build Report from RSS Feed on ' + feed.updated.text())
-				p('Number of GOOD builds = ' + goodCount)
-				p('Number of BROKEN builds = ' + brokenBuildCount)
-				p('Total duration in build file is ' + formatTime(overallDuration))
-				p('Total build UP time is ' + formatTime(totalGoodBuildTime))
-				p('Total build DOWN time is ' + formatTime(overallDuration - totalGoodBuildTime))
-				p {
-					("The list of UP time durations")
-					ul {
-						upTimes.each {
-							li (formatTime(it))
-						}
+				
+				ul {
+					li('Number of GOOD builds = ' + goodCount)
+					li('Number of BROKEN builds = ' + brokenBuildCount)
+					li('Total duration in build file is ' + formatTime(overallDuration))
+					li('Total build UP time is ' + formatTime(totalGoodBuildTime))
+					li('Total build DOWN time is ' + formatTime(overallDuration - totalGoodBuildTime))
+				}
+					
+				ul("The list of UP time durations") {
+					upTimes.each {
+						li (formatTime(it))
 					}
 				}
 			}
