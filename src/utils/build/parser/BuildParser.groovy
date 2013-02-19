@@ -14,7 +14,7 @@ class BuildParser {
 	
 	long totalGoodBuildTime = 0
 	long overallDuration = 0
-	
+	def feed
 	def upTimes = []
 	
 	BuildParser(inputFile) {
@@ -22,7 +22,7 @@ class BuildParser {
 	}
 	
 	Integer parseFile() {
-		def feed = new XmlSlurper().parse(inputFile)
+		feed = new XmlSlurper().parse(inputFile)
 
 		String firstBuildTime
 		String lastBuildTime
@@ -85,15 +85,18 @@ class BuildParser {
 			    ''')
 			}
 			body {
+				p('Build Report from RSS Feed on ' + feed.updated.text())
 				p('Number of GOOD builds = ' + goodCount)
 				p('Number of BROKEN builds = ' + brokenBuildCount)
 				p('Total duration in build file is ' + formatTime(overallDuration))
 				p('Total build UP time is ' + formatTime(totalGoodBuildTime))
 				p('Total build DOWN time is ' + formatTime(overallDuration - totalGoodBuildTime))
-				p("The list of UP time durations")
-				ul {
-					upTimes.each {
-						li (formatTime(it))
+				p {
+					("The list of UP time durations")
+					ul {
+						upTimes.each {
+							li (formatTime(it))
+						}
 					}
 				}
 			}
