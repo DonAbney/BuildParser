@@ -94,7 +94,7 @@ class BuildParser {
 					li('Total build UP time is ' + formatTime(totalGoodBuildTime))
 					li('Total build DOWN time is ' + formatTime(overallDuration - totalGoodBuildTime))
 				}
-					
+				
 				ul("The list of UP time durations") {
 					upTimes.each {
 						li (formatTime(it))
