@@ -85,7 +85,7 @@ class BuildParser {
 			    ''')
 			}
 			body {
-				p('Build Report from RSS Feed on ' + feed.updated.text())
+				h1 'Build Report from RSS Feed on ' + feed.updated.text()
 				
 				ul {
 					li('Number of GOOD builds = ' + goodCount)
@@ -95,7 +95,8 @@ class BuildParser {
 					li('Total build DOWN time is ' + formatTime(overallDuration - totalGoodBuildTime))
 				}
 				
-				ul("The list of UP time durations") {
+				h1 'The list of UP time durations'
+				ul {
 					upTimes.each {
 						li (formatTime(it))
 					}
